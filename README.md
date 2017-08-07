@@ -1,5 +1,5 @@
 # unwrap-mml
-Library to convert simple MathML equations to plaintext
+Library to convert simple MathML equations to XML/plaintext
 
 ## Description
 
@@ -61,9 +61,11 @@ with DocBook superscripts:
  </xsl:param>
 ```
 
+Note: If you want to convert MathML to pure plainntext, just declare all parameters as empty.
+
 Use the function _tr:unwrap-mml-boolean()_ as condition in your template
-to determine whether the MathML can be unwrapped or not. Apply the subsequent
-templates in the mode `unwrap-mml`
+to determine whether the MathML can be unwrapped or not. Apply subsequent
+templates in the XSLT mode `unwrap-mml`.
 
 ```xml
 <xsl:template match="*:inlineequation[mml:math[tr:unwrap-mml-boolean(.)]]">
