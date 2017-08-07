@@ -55,7 +55,7 @@ wrapper elements for your target XML grammar:
 Here is an example on how to configure that MathML superscripts are replaced
 with DocBook superscripts:
 
-```
+```xml
   <xsl:param name="superscript" as="element()">
     <superscript xmlns="http://docbook.org/ns/docbook"/>
   </xsl:param>
@@ -65,8 +65,7 @@ Use the function _tr:unwrap-mml-boolean()_ as condition in your template
 to determine whether the MathML can be unwrapped or not. Apply the subsequent
 templates in the mode `unwrap-mml`
 
-```
-xml
+```xml
 <xsl:template match="*:inlineequation[mml:math[tr:unwrap-mml-boolean(.)]]">
     <xsl:apply-templates mode="unwrap-mml"/>
 </xsl:template>
