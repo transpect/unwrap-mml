@@ -1,2 +1,80 @@
 # unwrap-mml
 Library to convert simple MathML equations to plaintext
+
+## Purpose of these library
+
+Besides LaTeX, MathML is in most cases the preferred format for the markup
+of math equations. However, simple equations and formula symbols do not
+necessarily need to be presented as MathML. In certain scenarios, it's more
+convenient to render the equations as plain text, for example to accelerate the
+rendering of the document, to decrease file size or to bypass lacking MathML
+support in some reading systems.
+
+## How it works
+
+Common math styles (bold, italic, bold-italic) and superscripts and subscripts are
+tagged with the appriopriate elements of the document XML schema. Letters in other
+styles (e.g. double-struck, fraktur, script) are mapped to their Unicode equivalent.
+
+```xml
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <msup>
+    <mi>x</mi>
+    <mn>2</mn>
+  </msup>
+</math>
+```
+
+The equation above converted to DocBook:
+
+
+```xml
+<emphase role="italic">x</emphasis><superscript>2</superscript>
+
+```
+
+## Configuration
+
+Create an XSLT stylesheet and import `xsl/unwrap-mml.xsl`.
+
+```xml
+ <xsl:import href="unwrap-mml.xsl"/>
+```
+
+Override the following parameters (XSD type: _element()_) to create appropriate
+wrapper elements for your target XML grammar:
+
+* wrapper (wrapper for the entire equation)
+* superscript
+* subscript
+* bold
+* italic
+* bold-italic
+
+Here is an example on how to configure that MathML superscripts are replaced
+with DocBook superscripts:
+
+```
+  <xsl:param name="superscript" as="element()">
+    <superscript xmlns="http://docbook.org/ns/docbook"/>
+  </xsl:param>
+
+```
+
+Use the function _tr:unwrap-mml-boolean()_ as condition in your template
+to determine whether the MathML can be unwrapped or not. Apply the subsequent
+templates in the mode `unwrap-mml`
+
+```
+xml
+ <xsl:template match="*:inlineequation[mml:math[tr:unwrap-mml-boolean(.)]]">
+    <xsl:apply-templates mode="unwrap-mml"/>
+</xsl:template>
+
+```
+
+Note: unwrap-mml requires that MathML comes with the namespace URI
+`http://www.w3.org/1998/Math/MathML`. If this is not the case, you must attach
+the namespace first and then invoke unwrap-mml. You can find an example
+in `xsl/unwra-mml-aplusplus.xsl`
+
