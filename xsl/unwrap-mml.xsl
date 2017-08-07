@@ -16,7 +16,7 @@
        Invoke on command line with saxon:
        $ saxon -xsl:xsl/unwrap-mml.xsl -s:source.xml -o:output.xml
   -->
-  
+    
   <xsl:strip-space elements="mml:*"/>
   
   <!-- wrapper element -->
@@ -128,14 +128,38 @@
     <xsl:variable name="mu-width" select="$width * 18" as="xs:decimal"/>
     <!-- 1 mu = 1/18em, MathML authors are encouraged to use em as unit here -->
     <xsl:variable name="text-mwidth" 
-                  select="if($mu-width &gt;= 36)  then '&#x2003;&#x2003;' (: twice of \quad (= 36 mu):)
-                          else if($mu-width &gt;= 18)  then '&#x2003;'    (: 1 mu :)
-                          else if($mu-width &gt;= 9)   then '&#x20;'      (: equivalent of space in normal text :)
-                          else if($mu-width &gt;= 5)   then '&#x2004;'    (: 5/18 of \quad (= 5 mu) :)
-                          else if($mu-width &gt;= 4)   then '&#x2005;'    (: 4/18 of \quad (= 3 mu) :)
-                          else if($mu-width &lt; 4)    then '&#x2009;'    (: 3/18 of \quad (= 3 mu) :)
+                  select="if     ($mu-width &gt;= 36)  then '&#x2003;&#x2003;' (: twice of \quad (= 36 mu):)
+                          else if($mu-width &gt;= 18)  then '&#x2003;'         (: 1 mu :)
+                          else if($mu-width &gt;=  9)  then '&#x20;'           (: equivalent of space in normal text :)
+                          else if($mu-width &gt;=  5)  then '&#x2004;'         (: 5/18 of \quad (= 5 mu) :)
+                          else if($mu-width &gt;=  4)  then '&#x2005;'         (: 4/18 of \quad (= 3 mu) :)
+                          else if($mu-width &lt;   4)  then '&#x2009;'         (: 3/18 of \quad (= 3 mu) :)
                                                        else '&#x20;'"/>
     <xsl:value-of select="$text-mwidth"/>
+  </xsl:template>
+  
+  <xsl:template match="mo[matches(., '&#x2061;') and @rspace]" mode="unwrap-mml">
+    <xsl:variable name="space-name" select="@rspace" as="attribute(rspace)"/>
+    <xsl:variable name="spaces" as="element()">
+      <spaces>
+        <space name="veryverythinmathspace">&#x200a;</space>
+        <space name="verythinmathspace">&#x200a;</space>
+        <space name="thinmathspace">&#x2002;</space>
+        <space name="mediummathspace">&#x2006;</space>
+        <space name="thickmathspace">&#x2005;</space>
+        <space name="verythickmathspace">&#x2004;</space>
+        <space name="veryverythickmathspace">&#x2002;</space>
+        <!-- to-do: handle negative spaces -->
+        <space name="negativeveryverythinmathspace"></space>
+        <space name="negativeverythinmathspace"></space>
+        <space name="negativethinmathspace"></space>
+        <space name="negativemediummathspace"></space>
+        <space name="negativethickmathspace"></space>
+        <space name="negativeverythickmathspace"></space>
+        <space name="negativeveryverythickmathspace"></space>        
+      </spaces>
+    </xsl:variable>
+    <xsl:value-of select="$spaces[@name eq $space-name]"/>    
   </xsl:template>
   
   <xsl:template match="mo" mode="unwrap-mml">
@@ -172,7 +196,7 @@
                           else false()"/>
   </xsl:function>
 
-  <xsl:template match="@*|node()">
+  <xsl:template match="@*|*">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
