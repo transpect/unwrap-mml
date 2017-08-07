@@ -1,7 +1,7 @@
 # unwrap-mml
 Library to convert simple MathML equations to plaintext
 
-## Purpose of these library
+## Description
 
 Besides LaTeX, MathML is in most cases the preferred format for the markup
 of math equations. However, simple equations and formula symbols do not
@@ -56,9 +56,9 @@ Here is an example on how to configure that MathML superscripts are replaced
 with DocBook superscripts:
 
 ```xml
-  <xsl:param name="superscript" as="element()">
-    <superscript xmlns="http://docbook.org/ns/docbook"/>
-  </xsl:param>
+<xsl:param name="superscript" as="element()">
+  <superscript xmlns="http://docbook.org/ns/docbook"/>
+ </xsl:param>
 ```
 
 Use the function _tr:unwrap-mml-boolean()_ as condition in your template
@@ -70,6 +70,12 @@ templates in the mode `unwrap-mml`
     <xsl:apply-templates mode="unwrap-mml"/>
 </xsl:template>
 ```
+
+You can configure at which size an equation won't be unwrapped. Therefore, you
+can set a limit for the maximum numbers of operators. If an equation has more
+operators than the operator limit, it won't be unwrapped. Please note that the
+operator limit represents `<mo>`s except those which contain parentheses or
+just whitespace.
 
 Note: unwrap-mml requires that MathML comes with the namespace URI
 `http://www.w3.org/1998/Math/MathML`. If this is not the case, you must attach
