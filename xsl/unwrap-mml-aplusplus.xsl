@@ -8,10 +8,10 @@
   exclude-result-prefixes="#all" 
   version="2.0">
   
-  <!-- dissolves inline equations in HUB by utilizing the unwrap-mml.xsl stylesheet 
+  <!-- dissolves inline equations in A++ by utilizing the unwrap-mml.xsl stylesheet 
     
        invoke from command line:
-       $ saxon -xsl:xsl/unwrap-mml-hub.xsl -s:source.xml -o:output.xml
+       $ saxon -xsl:xsl/unwrap-mml-hub.xsl -s:source.xml -o:output.xml -it:main
 
   -->
   
@@ -47,13 +47,13 @@
         * mode "unwrap-mml" invokes unwrap-mml module
         * -->
   
-  <xsl:template match="InlineEquation[EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]]
-                      |Equation[EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]]" mode="apply-unwrap-mml">
+  <xsl:template match="InlineEquation[EquationSource[@Format eq 'MATHML'] and tr:unwrap-mml-boolean(mml:math)]
+                      |Equation[EquationSource[@Format eq 'MATHML'] and tr:unwrap-mml-boolean(mml:math)]" mode="apply-unwrap-mml">
     <xsl:comment select="@ID, 'flattened'"/>
     <xsl:apply-templates select="EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]" mode="unwrap-mml"/>
   </xsl:template>
 
-  <xsl:template match="mml:math//text()[matches(., '^[\n\p{Zs}&#x200b;-&#x200f;]+$')]" mode="unwrap-mml"/>
+  <xsl:template match="mml:math[tr:unwrap-mml-boolean(.)]//text()[matches(., '^[\n\p{Zs}&#x200b;-&#x200f;]+$')]" mode="unwrap-mml"/>
   
   <!--  *
         * mode "attach-mml-ns" add mathml namespace
