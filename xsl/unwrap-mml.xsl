@@ -127,7 +127,7 @@
   </xsl:template>
   
   <xsl:template match="msub|msup" mode="unwrap-mml">
-    <xsl:variable name="element" select="if(local-name() eq 'msub') then $subscript else $superscript" as="element()"/>
+    <xsl:variable name="element" select="if(local-name() eq 'msub') then $subscript else $superscript" as="element()?"/>
     <xsl:apply-templates select="*[1]" mode="unwrap-mml"/>
     <xsl:choose>
       <xsl:when test="empty($element) and matches(*[2], '^\d+$')">
