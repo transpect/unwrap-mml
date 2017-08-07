@@ -4,12 +4,11 @@
   xmlns:tr="http://transpect.io"
   xmlns:css="http://www.w3.org/1996/css" 
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
-  xmlns:mml2tex="http://transpect.io/mml2tex"
-  exclude-result-prefixes="xs tr mml css mml2tex"
+  exclude-result-prefixes="xs tr mml css"
   xmlns="http://docbook.org/ns/docbook" 
   version="2.0">
   
-  <!-- dissolves inline equations in HUB by utilizing the unwrap-mml.xsl stylesheet 
+  <!-- dissolves inline equations in DocBook by utilizing the unwrap-mml.xsl stylesheet 
     
        invoke from command line:
        $ saxon -xsl:xsl/unwrap-mml-hub.xsl -s:source.xml -o:output.xml
