@@ -53,7 +53,7 @@
     <xsl:apply-templates select="EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]" mode="unwrap-mml"/>
   </xsl:template>
 
-  <xsl:template match="mml:math[tr:unwrap-mml-boolean(.)]//text()[matches(., '^[\n\p{Zs}&#x200b;-&#x200f;]+$')]" mode="unwrap-mml"/>
+  <xsl:template match="mml:math[tr:unwrap-mml-boolean(.)]//text()[matches(., concat('^', $whitespace-regex, '$'))]" mode="unwrap-mml"/>
   
   <!--  *
         * mode "attach-mml-ns" add mathml namespace
