@@ -39,7 +39,7 @@ You can find the full examples [here](https://github.com/transpect/unwrap-mml/bl
 Create an XSLT stylesheet and import `xsl/unwrap-mml.xsl`.
 
 ```xml
- <xsl:import href="unwrap-mml.xsl"/>
+<xsl:import href="unwrap-mml.xsl"/>
 ```
 
 Override the following parameters (XSD type: _element()_) to create appropriate
@@ -58,7 +58,7 @@ with DocBook superscripts:
 ```xml
 <xsl:param name="superscript" as="element()">
   <superscript xmlns="http://docbook.org/ns/docbook"/>
- </xsl:param>
+</xsl:param>
 ```
 
 Note: If you want to convert MathML to pure plainntext, just declare all parameters as empty.
@@ -69,7 +69,7 @@ templates in the XSLT mode `unwrap-mml`.
 
 ```xml
 <xsl:template match="*:inlineequation[mml:math[tr:unwrap-mml-boolean(.)]]">
-    <xsl:apply-templates mode="unwrap-mml"/>
+  <xsl:apply-templates mode="unwrap-mml"/>
 </xsl:template>
 ```
 
