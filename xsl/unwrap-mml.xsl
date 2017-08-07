@@ -23,26 +23,36 @@
   <xsl:param name="wrapper" as="element()?">
     <phrase role="flattened-mml" xmlns="http://docbook.org/ns/docbook"/>
   </xsl:param>
+  
   <!-- create elements for different styles. You may override this in your 
        importing stylesheet to satisfy other XML schemas -->
   <xsl:param name="superscript" as="element()">
     <superscript xmlns="http://docbook.org/ns/docbook"/>
   </xsl:param>
+  
   <xsl:param name="subscript" as="element()">
     <subscript xmlns="http://docbook.org/ns/docbook"/>
   </xsl:param>
+  
   <xsl:param name="bold" as="element()">
     <phrase role="bold" xmlns="http://docbook.org/ns/docbook"/>
   </xsl:param>
+  
   <xsl:param name="italic" as="element()">
     <phrase role="italic" xmlns="http://docbook.org/ns/docbook"/>
   </xsl:param>
+  
   <xsl:param name="bold-italic" as="element()">
     <phrase role="bold-italic" xmlns="http://docbook.org/ns/docbook"/>
   </xsl:param>
   
-  <!-- if the number of operators exceed this limit, the equation will not be flattened -->
-  <xsl:param name="operator-limit"   select="1"             as="xs:integer"/>
+  <!-- if the number of operators (except those containing whitespace and parentheses) 
+       exceed this limit, the equation will not be flattened -->
+  <xsl:param name="operator-limit" select="1" as="xs:integer"/>
+
+  <xsl:variable name="whitespace-regex" select="'[\n\p{Zs}&#x200b;-&#x200f;]'" as="xs:string"/>
+
+  <xsl:variable name="parenthesis-regex" select="'[\[\]\(\){}&#x2308;&#x2309;&#x230a;&#x230b;&#x2329;&#x232a;&#x27e8;&#x27e9;&#x3008;&#x3009;]'" as="xs:string"/>
 
   <xsl:template match="math[every $i in .//*
                             satisfies (string-length(normalize-space($i)) eq 0 and not($i/@*))]" mode="mml2tex-preprocess">
@@ -168,7 +178,7 @@
   
   <xsl:function name="tr:unwrap-mml-boolean" as="xs:boolean">
     <xsl:param name="math" as="element(math)"/>
-    <xsl:value-of select="if(count($math//mo) le $operator-limit
+    <xsl:value-of select="if(count($math//mo[not(matches(., concat('^', $whitespace-regex, '|', $parenthesis-regex, '$')))]) le $operator-limit
                              and not(   $math//mfrac 
                                      or $math//mroot
                                      or $math//msqrt
@@ -188,8 +198,6 @@
                                      or $math//mlongdiv
                                      or $math//msup[.//msub|.//msup]
                                      or $math//msub[.//msub|.//msup]
-                                     or $math/msup[not(matches(., '[&#x0009;-&#x007f;]'))]
-                                     or $math/msub[not(matches(., '[&#x0009;-&#x007f;]'))]
                                      )
                              )
                           then true()
