@@ -54,6 +54,35 @@
 
   <xsl:variable name="parenthesis-regex" select="'[\[\]\(\){}&#x2308;&#x2309;&#x230a;&#x230b;&#x2329;&#x232a;&#x27e8;&#x27e9;&#x3008;&#x3009;]'" as="xs:string"/>
 
+  <xsl:variable name="math-alphanums" as="element()+">
+    <alphanums>
+      <alphanum name="greek">ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡϴΣΤΥΦΧΨΩ∇αβγδεζηθικλμνξοπρςστυφχψω∂εϑϰϕρϖ</alphanum>
+      <alphanum name="serif-bold">𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳</alphanum>
+      <alphanum name="serif-italic">𝐴𝐵𝐶𝐷𝐸𝐹𝐺𝐻𝐼𝐽𝐾𝐿𝑀𝑁𝑂𝑃𝑄𝑅𝑆𝑇𝑈𝑉𝑊𝑋𝑌𝑍𝑎𝑏𝑐𝑑𝑒𝑓𝑔𝑖𝑗𝑘𝑙𝑚𝑛𝑜𝑝𝑞𝑟𝑠𝑡𝑢𝑣𝑤𝑥𝑦𝑧</alphanum>
+      <alphanum name="serif-bold-italic">𝑨𝑩𝑪𝑫𝑬𝑭𝑮𝑯𝑰𝑱𝑲𝑳𝑴𝑵𝑶𝑷𝑸𝑹𝑺𝑻𝑼𝑽𝑾𝑿𝒀𝒁𝒂𝒃𝒄𝒅𝒆𝒇𝒈𝒉𝒊𝒋𝒌𝒍𝒎𝒏𝒐𝒑𝒒𝒓𝒔𝒕𝒖𝒗𝒘𝒙𝒚𝒛</alphanum>
+      <alphanum name="fraktur">𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷</alphanum>
+      <alphanum name="script">𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀ℓ𝓁𝓂𝓃𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏</alphanum>
+      <alphanum name="double-struck">𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫</alphanum>
+      <alphanum name="bold-fraktur">𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟</alphanum>
+      <alphanum name="bold-script">𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃</alphanum>
+      <alphanum name="sans-serif">𝖠𝖡𝖢𝖣𝖤𝖥𝖦𝖧𝖨𝖩𝖪𝖫𝖬𝖭𝖮𝖯𝖰𝖱𝖲𝖳𝖴𝖵𝖶𝖷𝖸𝖹𝖺𝖻𝖼𝖽𝖾𝖿𝗀𝗁𝗂𝗃𝗄𝗅𝗆𝗇𝗈𝗉𝗊𝗋𝗌𝗍𝗎𝗏𝗐𝗑𝗒𝗓</alphanum>
+      <alphanum name="sans-serif-bold">𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇</alphanum>
+      <alphanum name="sans-serif-italic">𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻</alphanum>
+      <alphanum name="sans-serif-bold-italic">𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯</alphanum>
+      <alphanum name="monospace">𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣</alphanum>
+      <alphanum name="greek-bold">𝚨𝚩𝚪𝚫𝚬𝚭𝚮𝚯𝚰𝚱𝚲𝚳𝚴𝚵𝚶𝚷𝚸𝚹𝚺𝚻𝚼𝚽𝚾𝚿𝛀𝛁𝛂𝛃𝛄𝛅𝛆𝛇𝛈𝛉𝛊𝛋𝛌𝛍𝛎𝛏𝛐𝛑𝛒𝛓𝛔𝛕𝛖𝛗𝛘𝛙𝛚𝛛𝛜𝛝𝛞𝛟𝛠𝛡</alphanum>
+      <alphanum name="greek-italic">𝛢𝛣𝛤𝛥𝛦𝛧𝛨𝛩𝛪𝛫𝛬𝛭𝛮𝛯𝛰𝛱𝛲𝛳𝛴𝛵𝛶𝛷𝛸𝛹𝛺𝛻𝛼𝛽𝛾𝛿𝜀𝜁𝜂𝜃𝜄𝜅𝜆𝜇𝜈𝜉𝜊𝜋𝜌𝜍𝜎𝜏𝜐𝜑𝜒𝜓𝜔𝜕𝜖𝜗𝜘𝜙𝜚𝜛</alphanum>
+      <alphanum name="greek-bold-italic">𝜜𝜝𝜞𝜟𝜠𝜡𝜢𝜣𝜤𝜥𝜦𝜧𝜨𝜩𝜪𝜫𝜬𝜭𝜮𝜯𝜰𝜱𝜲𝜳𝜴𝜵𝜶𝜷𝜸𝜹𝜺𝜻𝜼𝜽𝜾𝜿𝝀𝝁𝝂𝝃𝝄𝝅𝝆𝝇𝝈𝝉𝝊𝝋𝝌𝝍𝝎𝝏𝝐𝝑𝝒𝝓𝝔𝝕</alphanum>
+      <alphanum name="greek-sans-serif-bold">𝝖𝝗𝝘𝝙𝝚𝝛𝝜𝝝𝝞𝝟𝝠𝝡𝝢𝝣𝝤𝝥𝝦𝝧𝝨𝝩𝝪𝝫𝝬𝝭𝝮𝝯𝝰𝝱𝝲𝝳𝝴𝝵𝝶𝝷𝝸𝝹𝝺𝝻𝝼𝝽𝝾𝝿𝞀𝞁𝞂𝞃𝞄𝞅𝞆𝞇𝞈𝞉𝞊𝞋𝞌𝞍𝞎𝞏</alphanum>
+      <alphanum name="greek-sans-serif-bold-italic">𝞐𝞑𝞒𝞓𝞔𝞕𝞖𝞗𝞘𝞙𝞚𝞛𝞜𝞝𝞞𝞟𝞠𝞡𝞢𝞣𝞤𝞥𝞦𝞧𝞨𝞩𝞪𝞫𝞬𝞭𝞮𝞯𝞰𝞱𝞲𝞳𝞴𝞵𝞶𝞷𝞸𝞹𝞺𝞻𝞼𝞽𝞾𝞿𝟀𝟁𝟂𝟃𝟄𝟅𝟆𝟇𝟈𝟉</alphanum>
+      <alphanum name="digit-bold">𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗</alphanum>
+      <alphanum name="digit-double-struck">𝟘𝟙𝟚𝟛𝟜𝟝𝟞𝟟𝟠𝟡</alphanum>
+      <alphanum name="digit-sans-serif">𝟢𝟣𝟤𝟥𝟦𝟧𝟨𝟩𝟪𝟫</alphanum>
+      <alphanum name="digit-sans-serif-bold">𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵</alphanum>
+      <alphanum name="digit-monospace">𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿</alphanum>
+    </alphanums>
+  </xsl:variable>
+
   <xsl:template match="math[every $i in .//*
                             satisfies (string-length(normalize-space($i)) eq 0 and not($i/@*))]" mode="mml2tex-preprocess">
     <xsl:message select="'[WARNING] empty equation removed:&#xa;', ."/>
@@ -80,10 +109,22 @@
   <xsl:template match="msub|msup" mode="unwrap-mml">
     <xsl:variable name="element" select="if(local-name() eq 'msub') then $subscript else $superscript" as="element()"/>
     <xsl:apply-templates select="*[1]" mode="unwrap-mml"/>
-    <xsl:element name="{$element/local-name()}" namespace="{$element/namespace-uri()}">
-      <xsl:apply-templates select="$element/@*" mode="#default"/>
-      <xsl:apply-templates select="*[2]" mode="unwrap-mml"/>
-    </xsl:element>
+    <xsl:choose>
+      <xsl:when test="empty($element) and matches(*[2], '^\d+$')">
+        <xsl:value-of select="translate(*[2],
+                                        '0123456789',
+                                        if(local-name() eq 'msub') 
+                                        then '₀₁₂₃₄₅₆₇₈₉'
+                                        else '⁰¹²³⁴⁵⁶⁷⁸⁹'
+                                        )"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:element name="{$element/local-name()}" namespace="{$element/namespace-uri()}">
+          <xsl:apply-templates select="$element/@*" mode="#default"/>
+          <xsl:apply-templates select="*[2]" mode="unwrap-mml"/>
+        </xsl:element>    
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="mi[string-length() eq 1 and not(@mathvariant) or @mathvariant = ('italic', '')]" mode="unwrap-mml">
@@ -93,44 +134,48 @@
     </xsl:element>
   </xsl:template>
   
-  <xsl:template match="*[local-name() = ('mi', 'mo', 'mn', 'mtext')][@mathvariant = ('italic', 'bold', 'bold-italic')]" mode="unwrap-mml">
-    <xsl:variable name="element" select="if(@mathvariant eq 'italic') then $italic
-                                         else if(@mathvariant eq 'bold') then $bold 
-                                         else $bold-italic" as="element()"/>
-    <xsl:element name="{$element/local-name()}" namespace="{$element/namespace-uri()}">
-      <xsl:apply-templates select="$element/@*" mode="#default"/>
-      <xsl:apply-templates select="node()" mode="unwrap-mml"/>
-    </xsl:element>
-  </xsl:template>
-  
-  <xsl:template match="*[local-name() = ('mi', 'mo', 'mn', 'mtext')][@mathvariant = ('fraktur', 
-                                                                                     'script', 
-                                                                                     'double-struck', 
-                                                                                     'bold-fraktur', 
-                                                                                     'bold-script', 
-                                                                                     'sans-serif', 
-                                                                                     'sans-serif-bold', 
-                                                                                     'sans-serif-italic', 
-                                                                                     'sans-serif-bold-italic', 
+  <xsl:template match="*[local-name() = ('mi', 'mo', 'mn', 'mtext')][@mathvariant = ('italic',
+                                                                                     'bold',
+                                                                                     'bold-italic',
+                                                                                     'fraktur',
+                                                                                     'script',
+                                                                                     'double-struck',
+                                                                                     'bold-fraktur',
+                                                                                     'bold-script',
+                                                                                     'sans-serif',
+                                                                                     'sans-serif-bold',
+                                                                                     'sans-serif-italic',
+                                                                                     'sans-serif-bold-italic',
                                                                                      'monospace')]" mode="unwrap-mml">
     <xsl:variable name="style" select="@mathvariant" as="attribute(mathvariant)"/>
-    <xsl:variable name="math-alphabets" as="element()+">
-      <alphabets>
-        <alphabet name="fraktur">𝔄𝔅ℭ𝔇𝔈𝔉𝔊ℌℑ𝔍𝔎𝔏𝔐𝔑𝔒𝔓𝔔ℜ𝔖𝔗𝔘𝔙𝔚𝔛𝔜ℨ𝔞𝔟𝔠𝔡𝔢𝔣𝔤𝔥𝔦𝔧𝔨𝔩𝔪𝔫𝔬𝔭𝔮𝔯𝔰𝔱𝔲𝔳𝔴𝔵𝔶𝔷</alphabet>
-        <alphabet name="script">𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀ℓ𝓁𝓂𝓃𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏</alphabet>
-        <alphabet name="double-struck">𝔸𝔹ℂ𝔻𝔼𝔽𝔾ℍ𝕀𝕁𝕂𝕃𝕄ℕ𝕆ℙℚℝ𝕊𝕋𝕌𝕍𝕎𝕏𝕐ℤ𝕒𝕓𝕔𝕕𝕖𝕗𝕘𝕙𝕚𝕛𝕜𝕝𝕞𝕟𝕠𝕡𝕢𝕣𝕤𝕥𝕦𝕧𝕨𝕩𝕪𝕫</alphabet>
-        <alphabet name="bold-fraktur">𝕬𝕭𝕮𝕯𝕰𝕱𝕲𝕳𝕴𝕵𝕶𝕷𝕸𝕹𝕺𝕻𝕼𝕽𝕾𝕿𝖀𝖁𝖂𝖃𝖄𝖅𝖆𝖇𝖈𝖉𝖊𝖋𝖌𝖍𝖎𝖏𝖐𝖑𝖒𝖓𝖔𝖕𝖖𝖗𝖘𝖙𝖚𝖛𝖜𝖝𝖞𝖟</alphabet>
-        <alphabet name="bold-script">𝓐𝓑𝓒𝓓𝓔𝓕𝓖𝓗𝓘𝓙𝓚𝓛𝓜𝓝𝓞𝓟𝓠𝓡𝓢𝓣𝓤𝓥𝓦𝓧𝓨𝓩𝓪𝓫𝓬𝓭𝓮𝓯𝓰𝓱𝓲𝓳𝓴𝓵𝓶𝓷𝓸𝓹𝓺𝓻𝓼𝓽𝓾𝓿𝔀𝔁𝔂𝔃</alphabet>
-        <alphabet name="sans-serif">𝖠𝖡𝖢𝖣𝖤𝖥𝖦𝖧𝖨𝖩𝖪𝖫𝖬𝖭𝖮𝖯𝖰𝖱𝖲𝖳𝖴𝖵𝖶𝖷𝖸𝖹𝖺𝖻𝖼𝖽𝖾𝖿𝗀𝗁𝗂𝗃𝗄𝗅𝗆𝗇𝗈𝗉𝗊𝗋𝗌𝗍𝗎𝗏𝗐𝗑𝗒𝗓</alphabet>
-        <alphabet name="sans-serif-bold">𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇</alphabet>
-        <alphabet name="sans-serif-italic">𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻</alphabet>
-        <alphabet name="sans-serif-bold-italic">𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯</alphabet>
-        <alphabet name="monospace">𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣</alphabet>
-      </alphabets>
-    </xsl:variable>
-    <xsl:value-of select="translate(., 
-                                    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 
-                                    $math-alphabets/*:alphabet[@name eq $style])"/>
+    <xsl:variable name="element" select="if($style eq 'italic') then $italic
+                                         else if($style eq 'bold') then $bold 
+                                         else $bold-italic" as="element()?"/>
+    <xsl:choose>
+      <xsl:when test="$style = ('italic', 'bold', 'bold-italic') and exists($element)">
+        <xsl:element name="{$element/local-name()}" namespace="{$element/namespace-uri()}">
+          <xsl:apply-templates select="$element/@*" mode="#default"/>
+          <xsl:apply-templates select="node()" mode="unwrap-mml"/>
+        </xsl:element>
+      </xsl:when>     
+      <xsl:when test="matches(., '^[0-9]+$')">
+        <xsl:value-of select="translate(., 
+                                        '01234556789', 
+                                        $math-alphanums/*:alphanum[@name eq concat('digit-', $style)])"/>
+      </xsl:when>
+      <xsl:when test="matches(., concat('^[', $math-alphanums/*:alphanum[@name eq 'greek'], ']$'))">
+        <xsl:value-of select="translate(., 
+                                        $math-alphanums/*:alphanum[@name eq 'greek'], 
+                                        $math-alphanums/*:alphanum[@name eq concat('greek-', $style)])"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="translate(., 
+                                        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 
+                                        $math-alphanums/*:alphanum[@name eq $style])"/>    
+      </xsl:otherwise>
+    </xsl:choose>
+    
+    
   </xsl:template>
   
   <xsl:template match="mspace" mode="unwrap-mml">
