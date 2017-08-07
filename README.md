@@ -61,7 +61,7 @@ with DocBook superscripts:
 </xsl:param>
 ```
 
-Note: If you want to convert MathML to pure plainntext, just declare all parameters as empty.
+Note: If you want to convert MathML to pure plaintext, just declare all parameters as empty.
 
 Use the function _tr:unwrap-mml-boolean()_ as condition in your template
 to determine whether the MathML can be unwrapped or not. Apply subsequent
