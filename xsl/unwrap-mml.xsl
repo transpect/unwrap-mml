@@ -56,7 +56,6 @@
 
   <xsl:variable name="math-alphanums" as="element()+">
     <alphanums>
-      <alphanum name="greek">ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡϴΣΤΥΦΧΨΩ∇αβγδεζηθικλμνξοπρςστυφχψω∂εϑϰϕρϖ</alphanum>
       <alphanum name="serif-bold">𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳</alphanum>
       <alphanum name="serif-italic">𝐴𝐵𝐶𝐷𝐸𝐹𝐺𝐻𝐼𝐽𝐾𝐿𝑀𝑁𝑂𝑃𝑄𝑅𝑆𝑇𝑈𝑉𝑊𝑋𝑌𝑍𝑎𝑏𝑐𝑑𝑒𝑓𝑔𝑖𝑗𝑘𝑙𝑚𝑛𝑜𝑝𝑞𝑟𝑠𝑡𝑢𝑣𝑤𝑥𝑦𝑧</alphanum>
       <alphanum name="serif-bold-italic">𝑨𝑩𝑪𝑫𝑬𝑭𝑮𝑯𝑰𝑱𝑲𝑳𝑴𝑵𝑶𝑷𝑸𝑹𝑺𝑻𝑼𝑽𝑾𝑿𝒀𝒁𝒂𝒃𝒄𝒅𝒆𝒇𝒈𝒉𝒊𝒋𝒌𝒍𝒎𝒏𝒐𝒑𝒒𝒓𝒔𝒕𝒖𝒗𝒘𝒙𝒚𝒛</alphanum>
@@ -70,6 +69,7 @@
       <alphanum name="sans-serif-italic">𝘈𝘉𝘊𝘋𝘌𝘍𝘎𝘏𝘐𝘑𝘒𝘓𝘔𝘕𝘖𝘗𝘘𝘙𝘚𝘛𝘜𝘝𝘞𝘟𝘠𝘡𝘢𝘣𝘤𝘥𝘦𝘧𝘨𝘩𝘪𝘫𝘬𝘭𝘮𝘯𝘰𝘱𝘲𝘳𝘴𝘵𝘶𝘷𝘸𝘹𝘺𝘻</alphanum>
       <alphanum name="sans-serif-bold-italic">𝘼𝘽𝘾𝘿𝙀𝙁𝙂𝙃𝙄𝙅𝙆𝙇𝙈𝙉𝙊𝙋𝙌𝙍𝙎𝙏𝙐𝙑𝙒𝙓𝙔𝙕𝙖𝙗𝙘𝙙𝙚𝙛𝙜𝙝𝙞𝙟𝙠𝙡𝙢𝙣𝙤𝙥𝙦𝙧𝙨𝙩𝙪𝙫𝙬𝙭𝙮𝙯</alphanum>
       <alphanum name="monospace">𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣</alphanum>
+      <alphanum name="greek">ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡϴΣΤΥΦΧΨΩ∇αβγδεζηθικλμνξοπρςστυφχψω∂εϑϰϕρϖ</alphanum>
       <alphanum name="greek-bold">𝚨𝚩𝚪𝚫𝚬𝚭𝚮𝚯𝚰𝚱𝚲𝚳𝚴𝚵𝚶𝚷𝚸𝚹𝚺𝚻𝚼𝚽𝚾𝚿𝛀𝛁𝛂𝛃𝛄𝛅𝛆𝛇𝛈𝛉𝛊𝛋𝛌𝛍𝛎𝛏𝛐𝛑𝛒𝛓𝛔𝛕𝛖𝛗𝛘𝛙𝛚𝛛𝛜𝛝𝛞𝛟𝛠𝛡</alphanum>
       <alphanum name="greek-italic">𝛢𝛣𝛤𝛥𝛦𝛧𝛨𝛩𝛪𝛫𝛬𝛭𝛮𝛯𝛰𝛱𝛲𝛳𝛴𝛵𝛶𝛷𝛸𝛹𝛺𝛻𝛼𝛽𝛾𝛿𝜀𝜁𝜂𝜃𝜄𝜅𝜆𝜇𝜈𝜉𝜊𝜋𝜌𝜍𝜎𝜏𝜐𝜑𝜒𝜓𝜔𝜕𝜖𝜗𝜘𝜙𝜚𝜛</alphanum>
       <alphanum name="greek-bold-italic">𝜜𝜝𝜞𝜟𝜠𝜡𝜢𝜣𝜤𝜥𝜦𝜧𝜨𝜩𝜪𝜫𝜬𝜭𝜮𝜯𝜰𝜱𝜲𝜳𝜴𝜵𝜶𝜷𝜸𝜹𝜺𝜻𝜼𝜽𝜾𝜿𝝀𝝁𝝂𝝃𝝄𝝅𝝆𝝇𝝈𝝉𝝊𝝋𝝌𝝍𝝎𝝏𝝐𝝑𝝒𝝓𝝔𝝕</alphanum>
@@ -81,6 +81,26 @@
       <alphanum name="digit-sans-serif-bold">𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵</alphanum>
       <alphanum name="digit-monospace">𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿</alphanum>
     </alphanums>
+  </xsl:variable>
+  
+  <xsl:variable name="math-spaces" as="element()">
+    <spaces>
+      <space name="veryverythinmathspace">&#x200a;</space>
+      <space name="verythinmathspace">&#x200a;</space>
+      <space name="thinmathspace">&#x2002;</space>
+      <space name="mediummathspace">&#x2006;</space>
+      <space name="thickmathspace">&#x2005;</space>
+      <space name="verythickmathspace">&#x2004;</space>
+      <space name="veryverythickmathspace">&#x2002;</space>
+      <!-- to-do: handle negative spaces -->
+      <space name="negativeveryverythinmathspace"></space>
+      <space name="negativeverythinmathspace"></space>
+      <space name="negativethinmathspace"></space>
+      <space name="negativemediummathspace"></space>
+      <space name="negativethickmathspace"></space>
+      <space name="negativeverythickmathspace"></space>
+      <space name="negativeveryverythickmathspace"></space>        
+    </spaces>
   </xsl:variable>
 
   <xsl:template match="math[every $i in .//*
@@ -128,10 +148,10 @@
   </xsl:template>
   
   <xsl:template match="mi[string-length() eq 1 and not(@mathvariant) or @mathvariant = ('italic', '')]" mode="unwrap-mml">
-    <xsl:element name="{$italic/local-name()}" namespace="{$italic/namespace-uri()}">
-      <xsl:apply-templates select="$italic/@*" mode="#default"/>
-      <xsl:apply-templates select="node()" mode="unwrap-mml"/>
-    </xsl:element>
+    <xsl:call-template name="conditionally-replace-chars">
+      <xsl:with-param name="element" select="$italic"/>
+      <xsl:with-param name="style" select="'italic'"/>
+    </xsl:call-template>
   </xsl:template>
   
   <xsl:template match="*[local-name() = ('mi', 'mo', 'mn', 'mtext')][@mathvariant = ('italic',
@@ -147,10 +167,20 @@
                                                                                      'sans-serif-italic',
                                                                                      'sans-serif-bold-italic',
                                                                                      'monospace')]" mode="unwrap-mml">
-    <xsl:variable name="style" select="@mathvariant" as="attribute(mathvariant)"/>
+    <xsl:variable name="style" select="@mathvariant" as="xs:string"/>
     <xsl:variable name="element" select="if($style eq 'italic') then $italic
                                          else if($style eq 'bold') then $bold 
-                                         else $bold-italic" as="element()?"/>
+                                         else if($style eq 'bold-italic') then $bold-italic 
+                                         else ()" as="element()?"/>
+    <xsl:call-template name="conditionally-replace-chars">
+      <xsl:with-param name="element" select="$element"/>
+      <xsl:with-param name="style" select="$style"/>
+    </xsl:call-template>
+  </xsl:template>
+  
+  <xsl:template name="conditionally-replace-chars">
+    <xsl:param name="element" as="element()?"/>
+    <xsl:param name="style" as="xs:string"/>
     <xsl:choose>
       <xsl:when test="$style = ('italic', 'bold', 'bold-italic') and exists($element)">
         <xsl:element name="{$element/local-name()}" namespace="{$element/namespace-uri()}">
@@ -161,7 +191,7 @@
       <xsl:when test="matches(., '^[0-9]+$')">
         <xsl:value-of select="translate(., 
                                         '01234556789', 
-                                        $math-alphanums/*:alphanum[@name eq concat('digit-', $style)])"/>
+                                         $math-alphanums/*:alphanum[@name eq concat('digit-', $style)])"/>
       </xsl:when>
       <xsl:when test="matches(., concat('^[', $math-alphanums/*:alphanum[@name eq 'greek'], ']$'))">
         <xsl:value-of select="translate(., 
@@ -174,8 +204,6 @@
                                         $math-alphanums/*:alphanum[@name eq $style])"/>    
       </xsl:otherwise>
     </xsl:choose>
-    
-    
   </xsl:template>
   
   <xsl:template match="mspace" mode="unwrap-mml">
@@ -195,26 +223,7 @@
   
   <xsl:template match="mo[matches(., '&#x2061;') and @rspace]" mode="unwrap-mml">
     <xsl:variable name="space-name" select="@rspace" as="attribute(rspace)"/>
-    <xsl:variable name="spaces" as="element()">
-      <spaces>
-        <space name="veryverythinmathspace">&#x200a;</space>
-        <space name="verythinmathspace">&#x200a;</space>
-        <space name="thinmathspace">&#x2002;</space>
-        <space name="mediummathspace">&#x2006;</space>
-        <space name="thickmathspace">&#x2005;</space>
-        <space name="verythickmathspace">&#x2004;</space>
-        <space name="veryverythickmathspace">&#x2002;</space>
-        <!-- to-do: handle negative spaces -->
-        <space name="negativeveryverythinmathspace"></space>
-        <space name="negativeverythinmathspace"></space>
-        <space name="negativethinmathspace"></space>
-        <space name="negativemediummathspace"></space>
-        <space name="negativethickmathspace"></space>
-        <space name="negativeverythickmathspace"></space>
-        <space name="negativeveryverythickmathspace"></space>        
-      </spaces>
-    </xsl:variable>
-    <xsl:value-of select="$spaces[@name eq $space-name]"/>    
+    <xsl:value-of select="$math-spaces[@name eq $space-name]"/>    
   </xsl:template>
   
   <xsl:template match="mo" mode="unwrap-mml">
