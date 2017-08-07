@@ -74,5 +74,5 @@ templates in the mode `unwrap-mml`
 Note: unwrap-mml requires that MathML comes with the namespace URI
 `http://www.w3.org/1998/Math/MathML`. If this is not the case, you must attach
 the namespace first and then invoke unwrap-mml. You can find an example
-in `xsl/unwra-mml-aplusplus.xsl`
+in `xsl/unwrap-mml-aplusplus.xsl`
 
