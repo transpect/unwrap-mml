@@ -25,13 +25,14 @@ styles (e.g. double-struck, fraktur, script) are mapped to their Unicode equival
 </math>
 ```
 
-The equation above converted to DocBook:
+The expression above converted to XHTML:
 
 
 ```xml
-<emphase role="italic">x</emphasis><superscript>2</superscript>
-
+<i>x</i><sup>2</sup>
 ```
+
+You can find the full examples [here](https://github.com/transpect/unwrap-mml/blob/master/example).
 
 ## Configuration
 
@@ -58,7 +59,6 @@ with DocBook superscripts:
   <xsl:param name="superscript" as="element()">
     <superscript xmlns="http://docbook.org/ns/docbook"/>
   </xsl:param>
-
 ```
 
 Use the function _tr:unwrap-mml-boolean()_ as condition in your template
@@ -67,10 +67,9 @@ templates in the mode `unwrap-mml`
 
 ```
 xml
- <xsl:template match="*:inlineequation[mml:math[tr:unwrap-mml-boolean(.)]]">
+<xsl:template match="*:inlineequation[mml:math[tr:unwrap-mml-boolean(.)]]">
     <xsl:apply-templates mode="unwrap-mml"/>
 </xsl:template>
-
 ```
 
 Note: unwrap-mml requires that MathML comes with the namespace URI
