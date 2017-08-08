@@ -103,6 +103,29 @@
     </spaces>
   </xsl:variable>
 
+  <xsl:variable name="fractions" as="element()+">
+    <fractions>
+      <frac value="1/2">½</frac>
+      <frac value="1/3">⅓</frac>
+      <frac value="2/3">⅔</frac>
+      <frac value="1/4">¼</frac>
+      <frac value="3/4">¾</frac>
+      <frac value="1/5">⅕</frac>
+      <frac value="2/5">⅖</frac>
+      <frac value="3/5">⅗</frac>
+      <frac value="4/5">⅘</frac>
+      <frac value="1/6">⅙</frac>
+      <frac value="5/6">⅚</frac>
+      <frac value="1/7">⅐</frac>
+      <frac value="1/8">⅛</frac>
+      <frac value="3/8">⅜</frac>
+      <frac value="5/8">⅝</frac>
+      <frac value="7/8">⅞</frac>
+      <frac value="1/9">⅑</frac>
+      <frac value="1/10">⅒</frac>
+    </fractions>
+  </xsl:variable>
+
   <xsl:template match="math[every $i in .//*
                             satisfies (string-length(normalize-space($i)) eq 0 and not($i/@*))]" mode="mml2tex-preprocess">
     <xsl:message select="'[WARNING] empty equation removed:&#xa;', ."/>
@@ -218,7 +241,7 @@
                           else if($mu-width &gt;=  5)  then '&#x2004;'         (: 5/18 of \quad (= 5 mu) :)
                           else if($mu-width &gt;=  4)  then '&#x2005;'         (: 4/18 of \quad (= 3 mu) :)
                           else if($mu-width &lt;   4)  then '&#x2009;'         (: 3/18 of \quad (= 3 mu) :)
-                                                       else '&#x20;'"/>
+                                                       else '&#x20;'" as="xs:string"/>
     <xsl:value-of select="$text-mwidth"/>
   </xsl:template>
   
@@ -231,10 +254,16 @@
     <xsl:value-of select="translate(., '-/', '&#x2212;&#x2215;')"/>
   </xsl:template>
   
+  <xsl:template match="mfrac[string-join(*, '/') = $fractions//*:frac/@value]" mode="unwrap-mml">
+    <xsl:variable name="frac-value" select="string-join(*, '/')"/>
+    <xsl:variable name="unicode-frac" select="$fractions/*:frac[@value eq $frac-value]" as="xs:string"/>
+    <xsl:value-of select="$unicode-frac"/>
+  </xsl:template>
+  
   <xsl:function name="tr:unwrap-mml-boolean" as="xs:boolean">
     <xsl:param name="math" as="element(math)"/>
     <xsl:value-of select="if(count($math//mo[not(matches(., concat('^', $whitespace-regex, '|', $parenthesis-regex, '$')))]) le $operator-limit
-                             and not(   $math//mfrac 
+                             and not(   $math//mfrac[not(string-join(*, '/') = $fractions//*:frac/@value)] 
                                      or $math//mroot
                                      or $math//msqrt
                                      or $math//mtable
