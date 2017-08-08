@@ -26,23 +26,23 @@
   
   <!-- create elements for different styles. You may override this in your 
        importing stylesheet to satisfy other XML schemas -->
-  <xsl:param name="superscript" as="element()">
+  <xsl:param name="superscript" as="element()?">
     <superscript xmlns="http://docbook.org/ns/docbook"/>
   </xsl:param>
   
-  <xsl:param name="subscript" as="element()">
+  <xsl:param name="subscript" as="element()?">
     <subscript xmlns="http://docbook.org/ns/docbook"/>
   </xsl:param>
   
-  <xsl:param name="bold" as="element()">
+  <xsl:param name="bold" as="element()?">
     <phrase role="bold" xmlns="http://docbook.org/ns/docbook"/>
   </xsl:param>
   
-  <xsl:param name="italic" as="element()">
+  <xsl:param name="italic" as="element()?">
     <phrase role="italic" xmlns="http://docbook.org/ns/docbook"/>
   </xsl:param>
   
-  <xsl:param name="bold-italic" as="element()">
+  <xsl:param name="bold-italic" as="element()?">
     <phrase role="bold-italic" xmlns="http://docbook.org/ns/docbook"/>
   </xsl:param>
   
