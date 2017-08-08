@@ -106,6 +106,7 @@
   <xsl:variable name="fractions" as="element()+">
     <fractions>
       <frac value="1/2">½</frac>
+      <frac value="0/3">↉</frac>
       <frac value="1/3">⅓</frac>
       <frac value="2/3">⅔</frac>
       <frac value="1/4">¼</frac>
