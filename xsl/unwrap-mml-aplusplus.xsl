@@ -52,6 +52,47 @@
     <xsl:comment select="@ID, 'flattened'"/>
     <xsl:apply-templates select="EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]" mode="unwrap-mml"/>
   </xsl:template>
+  
+  <xsl:template match="mml:msubsup[not(.//*[local-name() = ('msub', 'msup', 'msubsup')])]" mode="unwrap-mml">
+    <xsl:apply-templates select="*[1]" mode="#current"/>
+    <Stack>
+      <Subscript>
+        <xsl:apply-templates select="*[2]" mode="#current"/>  
+      </Subscript>
+      <Superscript>
+        <xsl:apply-templates select="*[3]" mode="#current"/>
+      </Superscript>
+    </Stack>
+  </xsl:template>
+  
+  <!-- override function for Stack element, allow msubsup -->
+  
+  <xsl:function name="tr:unwrap-mml-boolean" as="xs:boolean">
+    <xsl:param name="math" as="element(mml:math)"/>
+    <xsl:value-of select="if(count($math//mo[not(matches(., concat('^', $whitespace-regex, '|', $parenthesis-regex, '$')))]) le $operator-limit
+                             and not(   $math//mfrac 
+                                     or $math//mroot
+                                     or $math//msqrt
+                                     or $math//mtable
+                                     or $math//mmultiscripts
+                                     or $math//mphantom
+                                     or $math//mstyle
+                                     or $math//mover
+                                     or $math//munder
+                                     or $math//munderover
+                                     or $math//munderover
+                                     or $math//menclose
+                                     or $math//merror
+                                     or $math//maction
+                                     or $math//mglyph
+                                     or $math//mlongdiv
+                                     or $math//msup[.//msub|.//msup]
+                                     or $math//msub[.//msub|.//msup]
+                                     )
+                              )
+                              then true()
+                              else false()"/>
+  </xsl:function>
 
   <xsl:template match="mml:math[tr:unwrap-mml-boolean(.)]//text()[matches(., concat('^', $whitespace-regex, '+$'))]" mode="unwrap-mml"/>
   
