@@ -211,7 +211,8 @@
     <xsl:variable name="mu-width" select="$width * 18" as="xs:decimal"/>
     <!-- 1 mu = 1/18em, MathML authors are encouraged to use em as unit here -->
     <xsl:variable name="text-mwidth" 
-                  select="if     ($mu-width &gt;= 36)  then '&#x2003;&#x2003;' (: twice of \quad (= 36 mu):)
+                  select="     if($mu-width &lt;   0)  then ''                 (: remove negative witdh :)
+                          else if($mu-width &gt;= 36)  then '&#x2003;&#x2003;' (: twice of \quad (= 36 mu):)
                           else if($mu-width &gt;= 18)  then '&#x2003;'         (: 1 mu :)
                           else if($mu-width &gt;=  9)  then '&#x20;'           (: equivalent of space in normal text :)
                           else if($mu-width &gt;=  5)  then '&#x2004;'         (: 5/18 of \quad (= 5 mu) :)
