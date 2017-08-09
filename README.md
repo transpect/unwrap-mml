@@ -79,6 +79,10 @@ operators than the operator limit, it won't be unwrapped. Please note that the
 operator limit represents `<mo>`s except those which contain parentheses or
 just whitespace.
 
+```xml
+<xsl:param name="operator-limit" select="1" as="xs:integer"/>
+```
+
 Note: unwrap-mml requires that MathML comes with the namespace URI
 `http://www.w3.org/1998/Math/MathML`. If this is not the case, you must attach
 the namespace first and then invoke unwrap-mml. You can find an example
