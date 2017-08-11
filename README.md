@@ -8,7 +8,7 @@ of math equations. However, simple equations and formula symbols do not
 necessarily need to be presented as MathML. In certain scenarios, it's more
 convenient to render the equations as plain text, for example to accelerate the
 rendering of the document, to decrease file size or to bypass lacking MathML
-support in some reading systems.
+support in some reading systems (poor you!).
 
 ## How it works
 
