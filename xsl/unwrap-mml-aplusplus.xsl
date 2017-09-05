@@ -47,8 +47,7 @@
         * mode "unwrap-mml" invokes unwrap-mml module
         * -->
   
-  <xsl:template match="InlineEquation[EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]]
-                      |Equation[EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]]" mode="apply-unwrap-mml">
+  <xsl:template match="InlineEquation[EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]]" mode="apply-unwrap-mml">
     <xsl:comment select="@ID, 'flattened'"/>
     <xsl:apply-templates select="EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]" mode="unwrap-mml"/>
   </xsl:template>
