@@ -5,7 +5,7 @@
   xmlns:css="http://www.w3.org/1996/css" 
   xmlns:mml="http://www.w3.org/1998/Math/MathML"
   xmlns:mml2tex="http://transpect.io/mml2tex"
-  exclude-result-prefixes="#all" 
+  exclude-result-prefixes="#all"   
   version="2.0">
   
   <!-- dissolves inline equations in A++ by utilizing the unwrap-mml.xsl stylesheet 
@@ -41,6 +41,18 @@
     <xsl:element name="{local-name()}">
       <xsl:apply-templates select="@*, node()" mode="#current"/>
     </xsl:element>
+  </xsl:template>
+  
+  <!-- you have to manually convert the XML entities to plain text brackets, e.g.:
+       cat myfile.app.xml | sed -u 's/&lt;\(!\[CDATA\[\)/<\1/g' | sed -u 's/\(\]\]\)&gt;/\1>/g'
+  -->
+  
+  <xsl:template match="EquationSource[@Format eq 'TEX']" mode="delete-mml-ns">
+    <xsl:copy>
+      <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
+      <xsl:copy-of select="text()"/>    
+      <xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
+    </xsl:copy>
   </xsl:template>
 
   <!--  *
