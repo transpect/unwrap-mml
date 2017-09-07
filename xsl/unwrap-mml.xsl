@@ -274,7 +274,6 @@
                                      or $math//mover
                                      or $math//munder
                                      or $math//munderover
-                                     or $math//munderover
                                      or $math//msubsup
                                      or $math//menclose
                                      or $math//merror
