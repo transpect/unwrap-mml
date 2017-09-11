@@ -54,7 +54,6 @@
   
   <xsl:template match="InlineEquation[EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]]" mode="apply-unwrap-mml">
     <xsl:comment select="@ID, 'flattened'"/>
-    <xsl:message select="tr:unwrap-mml-boolean(EquationSource[@Format eq 'MATHML']/mml:math)"></xsl:message>
     <xsl:apply-templates select="EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]" mode="unwrap-mml"/>
   </xsl:template>
   
