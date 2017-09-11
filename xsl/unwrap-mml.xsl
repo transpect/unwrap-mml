@@ -3,6 +3,7 @@
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:mml="http://www.w3.org/1998/Math/MathML"
                 xmlns:tr="http://transpect.io"
+                xmlns:functx="http://www.functx.com"
                 exclude-result-prefixes="xs" 
                 xpath-default-namespace="http://www.w3.org/1998/Math/MathML"
                 version="2.0">
@@ -260,6 +261,28 @@
     <xsl:variable name="unicode-frac" select="$fractions/*:frac[@value eq $frac-value]" as="xs:string"/>
     <xsl:value-of select="$unicode-frac"/>
   </xsl:template>
+  
+  <xsl:template match="mfenced" mode="unwrap-mml">
+    <xsl:variable name="seps" select="@separators" as="attribute(separators)?"/>
+    <xsl:value-of select="(@open, '(')[1]"/>
+    <xsl:for-each select="*">
+      <xsl:variable name="pos" select="position()"/>
+      <xsl:apply-templates mode="#current"/> 
+      <xsl:value-of select="     if(not($pos eq last()) and $seps)
+                              then (functx:chars($seps)[$pos], '')[1]
+                            else if (not($pos eq last()) and not($seps))
+                              then ','
+                            else ''"/>
+    </xsl:for-each>
+    <xsl:value-of select="(@close, ')')[1]"/>
+  </xsl:template>
+  
+  <xsl:function name="functx:chars" as="xs:string*">
+    <xsl:param name="arg" as="xs:string?"/>
+    
+    <xsl:sequence select="for $ch in string-to-codepoints($arg)
+                          return codepoints-to-string($ch)"/>
+  </xsl:function>
   
   <xsl:function name="tr:unwrap-mml-boolean" as="xs:boolean">
     <xsl:param name="math" as="element(math)"/>
