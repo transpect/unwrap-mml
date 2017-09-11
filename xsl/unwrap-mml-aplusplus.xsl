@@ -58,10 +58,6 @@
     <xsl:apply-templates select="EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]" mode="unwrap-mml"/>
   </xsl:template>
   
-  <!-- you have to manually convert the XML entities to plain text brackets, e.g.:
-       cat myfile.app.xml | sed -u 's/&lt;\(!\[CDATA\[\)/<\1/g' | sed -u 's/\(\]\]\)&gt;/\1>/g'
-  -->
-  
   <xsl:template match="EquationSource[not(@Format eq 'TEX')]" mode="apply-unwrap-mml" priority="-1">
     <FITZLIBUTZI>
       <xsl:apply-templates select="@*, node()" mode="#current"/>
