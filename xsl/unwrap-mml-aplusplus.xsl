@@ -10,12 +10,17 @@
   
   <!-- dissolves inline equations in A++ by utilizing the unwrap-mml.xsl stylesheet 
     
+       please note that you have to manually replace the string "FITZLIBUTZI" with "EquationSource"
+       as shown below. This is needed because A++ encapsulate TeX code with CDATA sections and XSLT 2.0
+       just accepts QNames as value for @cdata-section-elements.
+    
        invoke from command line:
-       $ saxon -xsl:xsl/unwrap-mml-hub.xsl -s:source.xml -o:output.xml -it:main
-
+       $ saxon -xsl:xsl/unwrap-mml-aplusplus.xsl -it:main -s:source.xml | sed -u 's/\(FITZLIBUTZI\)/EquationSource/g'
   -->
   
   <xsl:import href="unwrap-mml.xsl"/>
+  
+  <xsl:output cdata-section-elements="EquationSource"/>
   
   <xsl:param name="superscript" as="element()">
     <Superscript/>
@@ -41,19 +46,7 @@
     <xsl:element name="{local-name()}">
       <xsl:apply-templates select="@*, node()" mode="#current"/>
     </xsl:element>
-  </xsl:template>
-  
-  <!-- you have to manually convert the XML entities to plain text brackets, e.g.:
-       cat myfile.app.xml | sed -u 's/&lt;\(!\[CDATA\[\)/<\1/g' | sed -u 's/\(\]\]\)&gt;/\1>/g'
-  -->
-  
-  <xsl:template match="EquationSource[@Format eq 'TEX']" mode="delete-mml-ns">
-    <xsl:copy>
-      <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
-      <xsl:copy-of select="text()"/>    
-      <xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
-    </xsl:copy>
-  </xsl:template>
+  </xsl:template>  
 
   <!--  *
         * mode "unwrap-mml" invokes unwrap-mml module
@@ -63,6 +56,16 @@
     <xsl:comment select="@ID, 'flattened'"/>
     <xsl:message select="tr:unwrap-mml-boolean(EquationSource[@Format eq 'MATHML']/mml:math)"></xsl:message>
     <xsl:apply-templates select="EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]" mode="unwrap-mml"/>
+  </xsl:template>
+  
+  <!-- you have to manually convert the XML entities to plain text brackets, e.g.:
+       cat myfile.app.xml | sed -u 's/&lt;\(!\[CDATA\[\)/<\1/g' | sed -u 's/\(\]\]\)&gt;/\1>/g'
+  -->
+  
+  <xsl:template match="EquationSource[not(@Format eq 'TEX')]" mode="apply-unwrap-mml" priority="-1">
+    <FITZLIBUTZI>
+      <xsl:apply-templates select="@*, node()" mode="#current"/>
+    </FITZLIBUTZI>
   </xsl:template>
   
   <xsl:template match="mml:msubsup[not(.//*[local-name() = ('msub', 'msup', 'msubsup')])]" mode="unwrap-mml">
@@ -138,7 +141,7 @@
   <!-- identity template -->
   
   <xsl:template match="*|@*|processing-instruction()|comment()" 
-                mode="attach-mml-ns apply-unwrap-mml delete-mml-ns" priority="-1">
+                mode="attach-mml-ns apply-unwrap-mml delete-mml-ns" priority="-2">
     <xsl:copy>
       <xsl:apply-templates select="@*, node()" mode="#current"/>
     </xsl:copy>
