@@ -37,6 +37,7 @@
   <xsl:param name="bold-italic" as="element()">
     <Emphasis Type="BoldItalic"/>
   </xsl:param>
+  <xsl:param name="whitespace-wrapper-for-operators" select="'&#x2009;'" as="xs:string*"/>
 
   <!--  *
         * mode "delete-mml-ns" drop the temporary mml namespace

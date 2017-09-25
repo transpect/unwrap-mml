@@ -51,6 +51,8 @@
        exceed this limit, the equation will not be flattened -->
   <xsl:param name="operator-limit" select="1" as="xs:integer"/>
 
+  <xsl:param name="whitespace-wrapper-for-operators" select="''" as="xs:string*"/>
+
   <xsl:variable name="whitespace-regex" select="'[\n\p{Zs}&#x200b;-&#x200f;]'" as="xs:string"/>
 
   <xsl:variable name="parenthesis-regex" select="'[\[\]\(\){}&#x2308;&#x2309;&#x230a;&#x230b;&#x2329;&#x232a;&#x27e8;&#x27e9;&#x3008;&#x3009;]'" as="xs:string"/>
@@ -253,7 +255,13 @@
   </xsl:template>
   
   <xsl:template match="mo" mode="unwrap-mml">
-    <xsl:value-of select="translate(., '-/', '&#x2212;&#x2215;')"/>
+    <xsl:variable name="whitespace-boolean" select="    not(matches(., $whitespace-regex))
+                                                    and not(ancestor::msup or ancestor::msub or ancestor::msubsup)
+                                                    and (preceding-sibling::*[1] and not(parent::math))" as="xs:boolean"/>
+    <xsl:variable name="whitespace" select="if($whitespace-boolean) 
+                                            then $whitespace-wrapper-for-operators 
+                                            else ''" as="xs:string?"/>
+    <xsl:value-of select="concat($whitespace, translate(., '-/', '&#x2212;&#x2215;'), $whitespace)"/>
   </xsl:template>
   
   <xsl:template match="mfrac[string-join(*, '/') = $fractions//*:frac/@value]" mode="unwrap-mml">
