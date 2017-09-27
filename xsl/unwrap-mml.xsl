@@ -257,11 +257,15 @@
   <xsl:template match="mo" mode="unwrap-mml">
     <xsl:variable name="whitespace-boolean" select="    not(matches(., $whitespace-regex))
                                                     and not(ancestor::msup or ancestor::msub or ancestor::msubsup)
-                                                    and (preceding-sibling::*[1] and not(parent::math))" as="xs:boolean"/>
+                                                    and (not(parent::math))
+                                                    and not(not(preceding-sibling::*[1]) and . = ('+', '-', '∓', '±'))
+                                                    " as="xs:boolean"/>
     <xsl:variable name="whitespace" select="if($whitespace-boolean) 
                                             then $whitespace-wrapper-for-operators 
                                             else ''" as="xs:string?"/>
-    <xsl:value-of select="concat($whitespace, translate(., '-/', '&#x2212;&#x2215;'), $whitespace)"/>
+    <xsl:value-of select="concat(if(preceding-sibling::*[1]) then $whitespace else '', 
+                                 translate(., '-/', '&#x2212;&#x2215;'), 
+                                 $whitespace)"/>
   </xsl:template>
   
   <xsl:template match="mfrac[string-join(*, '/') = $fractions//*:frac/@value]" mode="unwrap-mml">
