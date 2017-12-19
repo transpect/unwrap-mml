@@ -20,7 +20,9 @@
   
   <xsl:import href="unwrap-mml.xsl"/>
   
-  <xsl:output cdata-section-elements="EquationSource"/>
+  <xsl:output cdata-section-elements="EquationSource" 
+              doctype-public="-//Springer-Verlag//DTD A++ V2.4//EN" 
+              doctype-system="http://devel.springer.de/A++/V2.4/DTD/A++V2.4.dtd"/>
   
   <xsl:param name="superscript" as="element()">
     <Superscript/>
