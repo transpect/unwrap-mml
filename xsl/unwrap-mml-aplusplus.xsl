@@ -24,6 +24,8 @@
               doctype-public="-//Springer-Verlag//DTD A++ V2.4//EN" 
               doctype-system="http://devel.springer.de/A++/V2.4/DTD/A++V2.4.dtd"/>
   
+  <xsl:param name="debug" select="'no'"/>
+  
   <xsl:param name="superscript" as="element()">
     <Superscript/>
   </xsl:param>
@@ -56,7 +58,9 @@
         * -->
   
   <xsl:template match="InlineEquation[EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]]" mode="apply-unwrap-mml">
-    <xsl:comment select="@ID, 'flattened'"/>
+    <xsl:if test="$debug eq 'yes'">
+      <xsl:comment select="@ID, 'flattened'"/>
+    </xsl:if>
     <xsl:apply-templates select="EquationSource[@Format eq 'MATHML']/mml:math[tr:unwrap-mml-boolean(.)]" mode="unwrap-mml"/>
   </xsl:template>
   
