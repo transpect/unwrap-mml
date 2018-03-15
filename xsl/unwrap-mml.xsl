@@ -46,7 +46,9 @@
   <xsl:param name="bold-italic" as="element()?">
     <phrase role="bold-italic" xmlns="http://docbook.org/ns/docbook"/>
   </xsl:param>
-  
+
+  <xsl:param name="flatten-display-equations" select="true()" as="xs:boolean"/>
+ 
   <!-- if the number of operators (except those containing whitespace and parentheses) 
        exceed this limit, the equation will not be flattened -->
   <xsl:param name="operator-limit" select="1" as="xs:integer"/>
@@ -174,7 +176,7 @@
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template match="mi[string-length() eq 1 and not(@mathvariant) or @mathvariant = ('italic', '')]" mode="unwrap-mml">
+  <xsl:template match="mi[string-length() eq 1 and not(@mathvariant) or @mathvariant = ('italic', '')]" mode="unwrap-mml" priority="2">
     <xsl:call-template name="conditionally-replace-chars">
       <xsl:with-param name="element" select="$italic"/>
       <xsl:with-param name="style" select="'italic'"/>
@@ -318,6 +320,7 @@
                                      or $math//msup[.//msub|.//msup]
                                      or $math//msub[.//msub|.//msup]
                                      )
+                              and (($math[@display eq 'block'] and $flatten-display-equations ) or $math[@display ne 'block'])
                              )
                           then true()
                           else false()"/>
