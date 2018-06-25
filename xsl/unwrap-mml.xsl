@@ -300,31 +300,30 @@
   
   <xsl:function name="tr:unwrap-mml-boolean" as="xs:boolean">
     <xsl:param name="math" as="element(math)"/>
-    <xsl:value-of select="if(count($math//mo[not(matches(., concat('^', $whitespace-regex, '|', $parenthesis-regex, '$')))]) le $operator-limit
-                             and not(   $math//mfrac[not(string-join(*, '/') = $fractions//*:frac/@value)] 
-                                     or $math//mroot
-                                     or $math//msqrt
-                                     or $math//mtable
-                                     or $math//mmultiscripts
-                                     or $math//mphantom
-                                     or $math//mstyle
-                                     or $math//mover
-                                     or $math//munder
-                                     or $math//munderover
-                                     or $math//msubsup
-                                     or $math//menclose
-                                     or $math//merror
-                                     or $math//maction
-                                     or $math//mglyph
-                                     or $math//mlongdiv
-                                     or $math//msup[.//msub|.//msup|.//msubsup]
-                                     or $math//msub[.//msub|.//msup|.//msubsup]
-                                     or $math//msubsup[.//msub|.//msup|.//msubsup]
-                                     )
-                              and (($math[@display eq 'block'] and $flatten-display-equations ) or $math[@display ne 'block'])
-                             )
-                          then true()
-                          else false()"/>
+    <xsl:value-of select="count($math//mo[not(matches(., concat('^', $whitespace-regex, '|', $parenthesis-regex, '$')))]) le $operator-limit
+                          and not(   $math//mfrac[not(string-join(*, '/') = $fractions//*:frac/@value)] 
+                                  or $math//mroot
+                                 or $math//msqrt
+                                 or $math//mtable
+                                 or $math//mmultiscripts
+                                 or $math//mphantom
+                                 or $math//mstyle
+                                 or $math//mover
+                                 or $math//munder
+                                 or $math//munderover
+                                 or $math//msubsup
+                                 or $math//menclose
+                                 or $math//merror
+                                 or $math//maction
+                                 or $math//mglyph
+                                 or $math//mlongdiv
+                                 or $math//msup[.//msub|.//msup|.//msubsup]
+                                 or $math//msub[.//msub|.//msup|.//msubsup]
+                                 or $math//msubsup[.//msub|.//msup|.//msubsup]
+                                 )
+                          and (($math[@display eq 'block'] 
+                               and $flatten-display-equations ) 
+                               or $math[@display ne 'block'])"/>
   </xsl:function>
 
   <xsl:template match="@*|*">
