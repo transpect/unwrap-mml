@@ -262,7 +262,7 @@
                                                     and (not(parent::math))
                                                     and not(not(preceding-sibling::*[1]) and . = ('+', '-', '∓', '±'))
                                                     " as="xs:boolean"/>
-    <xsl:variable name="whitespace" select="if($whitespace-boolean) 
+    <xsl:variable name="whitespace" select="if($whitespace-boolean and not(matches(., $parenthesis-regex))) 
                                             then $whitespace-wrapper-for-operators 
                                             else ''" as="xs:string?"/>
     <xsl:value-of select="concat(if(preceding-sibling::*[1]) then $whitespace else '', 
