@@ -86,28 +86,26 @@
   
   <xsl:function name="tr:unwrap-mml-boolean" as="xs:boolean">
     <xsl:param name="math" as="element(mml:math)"/>
-    <xsl:value-of select="if(count($math//mml:mo[not(matches(., concat('^', $whitespace-regex, '|', $parenthesis-regex, '$')))]) le $operator-limit
-                                                 and not(   $math//mml:mfrac[not(string-join(*, '/') = $fractions//mml:frac/@value)] 
-                                                         or $math//mml:mroot
-                                                         or $math//mml:msqrt
-                                                         or $math//mml:mtable
-                                                         or $math//mml:mmultiscripts
-                                                         or $math//mml:mphantom
-                                                         or $math//mml:mstyle
-                                                         or $math//mml:mover
-                                                         or $math//mml:munder
-                                                         or $math//mml:munderover
-                                                         or $math//mml:menclose
-                                                         or $math//mml:merror
-                                                         or $math//mml:maction
-                                                         or $math//mml:mglyph
-                                                         or $math//mml:mlongdiv
-                                                         or $math//mml:msup[.//mml:msub|.//mml:msup]
-                                                         or $math//mml:msub[.//mml:msub|.//mml:msup]
-                                                         )
-                             )
-                          then true()
-                          else false()"/>
+    <xsl:sequence select="count($math//mml:mo[not(matches(., concat('^', $whitespace-regex, '|', $parenthesis-regex, '$')))]) le $operator-limit
+                          and not(  $math//mml:mfrac[not(string-join(*, '/') = $fractions//mml:frac/@value)] 
+                                 or $math//mml:mroot
+                                 or $math//mml:msqrt
+                                 or $math//mml:mtable
+                                 or $math//mml:mmultiscripts
+                                 or $math//mml:mphantom
+                                 or $math//mml:mstyle
+                                 or $math//mml:mover
+                                 or $math//mml:munder
+                                 or $math//mml:munderover
+                                 or $math//mml:menclose
+                                 or $math//mml:merror
+                                 or $math//mml:maction
+                                 or $math//mml:mglyph
+                                 or $math//mml:mlongdiv
+                                 or $math//mml:msup[.//mml:msub|.//mml:msup|.//mml:msubsup]
+                                 or $math//mml:msub[.//mml:msub|.//mml:msup|.//mml:msubsup]
+                                 or $math//mml:msubsup[.//mml:msub|.//mml:msup|.//mml:msubsup]
+                                 )"/>
   </xsl:function>
 
   <xsl:template match="mml:math[tr:unwrap-mml-boolean(.)]//text()[matches(., concat('^', $whitespace-regex, '+$'))]" mode="unwrap-mml"/>

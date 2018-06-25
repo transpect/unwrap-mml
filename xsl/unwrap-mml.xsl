@@ -317,8 +317,9 @@
                                      or $math//maction
                                      or $math//mglyph
                                      or $math//mlongdiv
-                                     or $math//msup[.//msub|.//msup]
-                                     or $math//msub[.//msub|.//msup]
+                                     or $math//msup[.//msub|.//msup|.//msubsup]
+                                     or $math//msub[.//msub|.//msup|.//msubsup]
+                                     or $math//msubsup[.//msub|.//msup|.//msubsup]
                                      )
                               and (($math[@display eq 'block'] and $flatten-display-equations ) or $math[@display ne 'block'])
                              )
