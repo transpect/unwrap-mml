@@ -280,8 +280,9 @@
     <xsl:variable name="seps" select="@separators" as="attribute(separators)?"/>
     <xsl:value-of select="(@open, '(')[1]"/>
     <xsl:for-each select="*">
+      <xsl:variable name="elm" select="." as="element()"/>
       <xsl:variable name="pos" select="position()"/>
-      <xsl:apply-templates mode="#current"/> 
+      <xsl:apply-templates select="$elm" mode="#current"/> 
       <xsl:value-of select="     if(not($pos eq last()) and $seps)
                               then (functx:chars($seps)[$pos], '')[1]
                             else if (not($pos eq last()) and not($seps))
