@@ -42,7 +42,8 @@
     <Emphasis Type="BoldItalic"/>
   </xsl:param>
   <xsl:param name="whitespace-wrapper-for-operators" select="'&#x2009;'" as="xs:string*"/>
-
+  <xsl:param name="operator-limit" select="2" as="xs:integer"/>
+  
   <!--  *
         * mode "delete-mml-ns" drop the temporary mml namespace
         * -->
