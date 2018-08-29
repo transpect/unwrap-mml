@@ -324,7 +324,7 @@
                                  )
                           and (($math[@display eq 'block'] 
                                and $flatten-display-equations ) 
-                               or $math[@display ne 'block'])"/>
+                               or $math[@display ne 'block' or not(@display)])"/>
   </xsl:function>
 
   <xsl:template match="@*|*">
