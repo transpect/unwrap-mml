@@ -236,8 +236,34 @@
   </xsl:template>
   
   <xsl:template match="mspace" mode="unwrap-mml">
-    <xsl:variable name="width" select="xs:decimal(replace(@width, '[a-z]+', ''))" as="xs:decimal"/>
-    <xsl:variable name="mu-width" select="$width * 18" as="xs:decimal"/>
+    <xsl:variable name="mu-width" as="xs:decimal">
+      <xsl:choose>
+        <xsl:when test="@width = 'mediummathspace'">
+          <xsl:sequence select="4"/>
+        </xsl:when>
+        <xsl:when test="matches(@width, '^\d')">
+          <xsl:sequence select="18 * xs:decimal(replace(@width, '[a-z]+', ''))"/>
+        </xsl:when>
+        <xsl:when test="@width = 'thinmathspace'">
+          <xsl:sequence select="3"/>
+        </xsl:when>
+        <xsl:when test="@width = 'thickmathspace'">
+          <xsl:sequence select="5"/>
+        </xsl:when>
+        <xsl:when test="@width = 'verythinmathspace'">
+          <xsl:sequence select="2"/>
+        </xsl:when>
+        <xsl:when test="@width = 'verythickmathspace'">
+          <xsl:sequence select="6"/>
+        </xsl:when>
+        <xsl:when test="@width = 'veryverythinmathspace'">
+          <xsl:sequence select="1"/>
+        </xsl:when>
+        <xsl:when test="@width = 'veryverythickmathspace'">
+          <xsl:sequence select="7"/>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:variable>
     <!-- 1 mu = 1/18em, MathML authors are encouraged to use em as unit here -->
     <xsl:variable name="text-mwidth" 
                   select="     if($mu-width &lt;   0)  then ''                 (: remove negative witdh :)
