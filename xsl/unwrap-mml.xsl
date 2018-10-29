@@ -327,9 +327,9 @@
   
   <xsl:function name="tr:unwrap-mml-boolean" as="xs:boolean">
     <xsl:param name="math" as="element(math)"/>
-    <xsl:value-of select="count($math//mo[not(matches(., concat('^', $whitespace-regex, '|', $parenthesis-regex, '$')))]) le $operator-limit
-                          and not(   $math//mfrac[not(string-join(*, '/') = $fractions//*:frac/@value)] 
-                                  or $math//mroot
+    <xsl:sequence select="count($math//mo[not(matches(., concat('^', $whitespace-regex, '|', $parenthesis-regex, '$')))]) le $operator-limit
+                          and not(  $math//mfrac[not(string-join(*, '/') = $fractions//*:frac/@value)] 
+                                 or $math//mroot
                                  or $math//msqrt
                                  or $math//mtable
                                  or $math//mmultiscripts
