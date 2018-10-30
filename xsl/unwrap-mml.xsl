@@ -53,7 +53,11 @@
        exceed this limit, the equation will not be flattened -->
   <xsl:param name="operator-limit" select="1" as="xs:integer"/>
 
-  <xsl:param name="whitespace-wrapper-for-operators" select="''" as="xs:string*"/>
+  <!-- Whether to covert <mfrac bevelled="true"><mi>a</mi><mi>b</mi></mfrac> to a/b 
+        (selected bevelled number fractions will be converted to their Unicode char equivalents though, see $fractions) -->
+  <xsl:param name="unwrap-mml-flatten-bevelled" select="'no'" as="xs:string"/>
+
+  <xsl:param name="whitespace-wrapper-for-operators" select="''" as="xs:string?"/>
 
   <xsl:variable name="whitespace-regex" select="'[\n\p{Zs}&#x200b;-&#x200f;]'" as="xs:string"/>
 
@@ -296,10 +300,16 @@
                                  $whitespace)"/>
   </xsl:template>
   
-  <xsl:template match="mfrac[string-join(*, '/') = $fractions//*:frac/@value]" mode="unwrap-mml">
+  <xsl:template match="mfrac[@bevelled = 'true'][string-join(*, '/') = $fractions//*:frac/@value]" mode="unwrap-mml" priority="2">
     <xsl:variable name="frac-value" select="string-join(*, '/')"/>
     <xsl:variable name="unicode-frac" select="$fractions/*:frac[@value eq $frac-value]" as="xs:string"/>
     <xsl:value-of select="$unicode-frac"/>
+  </xsl:template>
+  
+  <xsl:template match="mfrac[@bevelled = 'true'][$unwrap-mml-flatten-bevelled = 'yes']" mode="unwrap-mml" priority="1">
+    <xsl:apply-templates select="*[1]" mode="#current"/>
+    <xsl:text>/</xsl:text>
+    <xsl:apply-templates select="*[2]" mode="#current"/>
   </xsl:template>
   
   <xsl:template match="mfenced" mode="unwrap-mml">
@@ -328,25 +338,28 @@
   <xsl:function name="tr:unwrap-mml-boolean" as="xs:boolean">
     <xsl:param name="math" as="element(math)"/>
     <xsl:sequence select="count($math//mo[not(matches(., concat('^', $whitespace-regex, '|', $parenthesis-regex, '$')))]) le $operator-limit
-                          and not(  $math//mfrac[not(string-join(*, '/') = $fractions//*:frac/@value)] 
-                                 or $math//mroot
-                                 or $math//msqrt
-                                 or $math//mtable
-                                 or $math//mmultiscripts
-                                 or $math//mphantom
-                                 or $math//mstyle
-                                 or $math//mover
-                                 or $math//munder
-                                 or $math//munderover
-                                 or $math//msubsup
-                                 or $math//menclose
-                                 or $math//merror
-                                 or $math//maction
-                                 or $math//mglyph
-                                 or $math//mlongdiv
-                                 or $math//msup[.//msub|.//msup|.//msubsup]
-                                 or $math//msub[.//msub|.//msup|.//msubsup]
-                                 or $math//msubsup[.//msub|.//msup|.//msubsup]
+                          and empty(  $math//mfrac[@bevelled = 'true']
+                                                  [not(string-join(*, '/') = $fractions//*:frac/@value
+                                                       or $unwrap-mml-flatten-bevelled = 'yes')]
+                                    | $math//mfrac[not(@bevelled = 'true')]
+                                    | $math//mroot
+                                    | $math//msqrt
+                                    | $math//mtable
+                                    | $math//mmultiscripts
+                                    | $math//mphantom
+                                    | $math//mstyle
+                                    | $math//mover
+                                    | $math//munder
+                                    | $math//munderover
+                                    | $math//msubsup
+                                    | $math//menclose
+                                    | $math//merror
+                                    | $math//maction
+                                    | $math//mglyph
+                                    | $math//mlongdiv
+                                    | $math//msup[.//msub|.//msup|.//msubsup]
+                                    | $math//msub[.//msub|.//msup|.//msubsup]
+                                    | $math//msubsup[.//msub|.//msup|.//msubsup]
                                  )
                           and (($math[@display eq 'block'] 
                                and $flatten-display-equations ) 
