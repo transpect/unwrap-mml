@@ -87,7 +87,24 @@
   
   <xsl:function name="tr:unwrap-mml-boolean" as="xs:boolean">
     <xsl:param name="math" as="element(mml:math)"/>
-    <xsl:sequence select="count($math//mml:mo[not(matches(., concat('^', $whitespace-regex, '|', $parenthesis-regex, '$')))]) le $operator-limit
+    <xsl:variable name="exclude-regex" as="xs:string" 
+                  select="concat('^', $whitespace-regex, 
+                                 '|', $parenthesis-regex, 
+                                 '|', $punctuation-regex,
+                                 '$')"/>
+    <xsl:variable name="effective-operators" as="xs:integer" 
+                  select="count($math//mml:mo[not(matches(., $exclude-regex))
+                                (: below follows a ridiculously complex xpath that was created to solely ensure
+                                that an asterisk used as unary operator in a subscript or superscript is ignored :)
+                                                  and (not(matches(., '[\*&#x2217;]')
+                                                       and  ((parent::*[local-name() = ('msup', 'msub')] and position() eq 2)
+                                                             or 
+                                                             (parent::mml:mrow[parent::*[local-name() = ('msup', 'msub')]] and position() eq 2)
+                                                            )
+                                                          )
+                                                      ) 
+                                             ])"/>
+    <xsl:sequence select="$effective-operators le $operator-limit
                           and not(  $math//mml:mfrac[not(string-join(*, '/') = $fractions//mml:frac/@value)] 
                                  or $math//mml:mroot
                                  or $math//mml:msqrt
@@ -107,6 +124,9 @@
                                  or $math//mml:msub[.//mml:msub|.//mml:msup|.//mml:msubsup]
                                  or $math//mml:msubsup[.//mml:msub|.//mml:msup|.//mml:msubsup]
                                  )"/>
+    
+    <xsl:message select="'---', $effective-operators"/>
+    
   </xsl:function>
 
   <xsl:template match="mml:math[tr:unwrap-mml-boolean(.)]//text()[matches(., concat('^', $whitespace-regex, '+$'))]" mode="unwrap-mml"/>
