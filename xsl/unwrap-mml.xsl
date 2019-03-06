@@ -62,6 +62,8 @@
   <xsl:variable name="whitespace-regex" select="'[\n\p{Zs}&#x200b;-&#x200f;]'" as="xs:string"/>
 
   <xsl:variable name="parenthesis-regex" select="'[\[\]\(\){}&#x2308;&#x2309;&#x230a;&#x230b;&#x2329;&#x232a;&#x27e8;&#x27e9;&#x3008;&#x3009;]'" as="xs:string"/>
+  
+  <xsl:variable name="punctuation-regex" select="'[&#x2000;-&#x206f;]'" as="xs:string"/>
 
   <xsl:variable name="math-alphanums" as="element()+">
     <alphanums>
@@ -337,7 +339,12 @@
   
   <xsl:function name="tr:unwrap-mml-boolean" as="xs:boolean">
     <xsl:param name="math" as="element(math)"/>
-    <xsl:sequence select="count($math//mo[not(matches(., concat('^', $whitespace-regex, '|', $parenthesis-regex, '$')))]) le $operator-limit
+    <xsl:variable name="exclude-regex" as="xs:string" 
+                  select="concat('^', $whitespace-regex, 
+                                 '|', $parenthesis-regex, 
+                                 '|', $punctuation-regex,
+                                 '$')"/>
+    <xsl:sequence select="count($math//mo[not(matches(., $exclude-regex))]) le $operator-limit
                           and empty(  $math//mfrac[@bevelled = 'true']
                                                   [not(string-join(*, '/') = $fractions//*:frac/@value
                                                        or $unwrap-mml-flatten-bevelled = 'yes')]
