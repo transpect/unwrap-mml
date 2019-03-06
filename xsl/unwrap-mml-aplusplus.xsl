@@ -123,10 +123,7 @@
                                  or $math//mml:msup[.//mml:msub|.//mml:msup|.//mml:msubsup]
                                  or $math//mml:msub[.//mml:msub|.//mml:msup|.//mml:msubsup]
                                  or $math//mml:msubsup[.//mml:msub|.//mml:msup|.//mml:msubsup]
-                                 )"/>
-    
-    <xsl:message select="'---', $effective-operators"/>
-    
+                                 )"/>    
   </xsl:function>
 
   <xsl:template match="mml:math[tr:unwrap-mml-boolean(.)]//text()[matches(., concat('^', $whitespace-regex, '+$'))]" mode="unwrap-mml"/>
