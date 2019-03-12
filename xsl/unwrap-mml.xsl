@@ -242,7 +242,7 @@
   </xsl:template>
   
   <xsl:template match="mspace" mode="unwrap-mml">
-    <xsl:variable name="mu-width" as="xs:decimal">
+    <xsl:variable name="mu-width" as="xs:decimal?">
       <xsl:choose>
         <xsl:when test="@width = 'mediummathspace'">
           <xsl:sequence select="4"/>
