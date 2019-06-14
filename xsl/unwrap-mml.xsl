@@ -268,6 +268,9 @@
         <xsl:when test="@width = 'veryverythickmathspace'">
           <xsl:sequence select="7"/>
         </xsl:when>
+        <xsl:otherwise>
+          <xsl:sequence select="0"/>
+        </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     <!-- 1 mu = 1/18em, MathML authors are encouraged to use em as unit here -->
