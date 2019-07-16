@@ -223,12 +223,13 @@
           <xsl:apply-templates select="node()" mode="unwrap-mml"/>
         </xsl:element>
       </xsl:when>     
-      <xsl:when test="matches(., '^[0-9]+$')">
+      <xsl:when test="matches(., '^[0-9]+$') and not($style = ('script', 'bold-script', 'fraktur', 'bold-fraktur'))">
         <xsl:value-of select="translate(., 
                                         '01234556789', 
                                          $math-alphanums/*:alphanum[@name eq concat('digit-', $style)])"/>
       </xsl:when>
-      <xsl:when test="matches(., concat('^[', $math-alphanums/*:alphanum[@name eq 'greek'], ']$'))">
+      <xsl:when test="matches(., concat('^[', $math-alphanums/*:alphanum[@name eq 'greek'], ']$'))
+                      and not($style = ('script', 'bold-script', 'fraktur', 'bold-fraktur'))">
         <xsl:value-of select="translate(., 
                                         $math-alphanums/*:alphanum[@name eq 'greek'], 
                                         $math-alphanums/*:alphanum[@name eq concat('greek-', $style)])"/>
