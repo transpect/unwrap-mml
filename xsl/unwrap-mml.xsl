@@ -229,15 +229,18 @@
                                          $math-alphanums/*:alphanum[@name eq concat('digit-', $style)])"/>
       </xsl:when>
       <xsl:when test="matches(., concat('^[', $math-alphanums/*:alphanum[@name eq 'greek'], ']$'))
-                      and not($style = ('script', 'bold-script', 'fraktur', 'bold-fraktur'))">
+                      and $math-alphanums/*:alphanum[@name eq concat('greek-', $style)]">
         <xsl:value-of select="translate(., 
                                         $math-alphanums/*:alphanum[@name eq 'greek'], 
                                         $math-alphanums/*:alphanum[@name eq concat('greek-', $style)])"/>
       </xsl:when>
-      <xsl:otherwise>
+      <xsl:when test="matches(., '[a-zA-Z]') and $math-alphanums/*:alphanum[@name eq $style]">
         <xsl:value-of select="translate(., 
                                         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', 
-                                        $math-alphanums/*:alphanum[@name eq $style])"/>    
+                                        $math-alphanums/*:alphanum[@name eq $style])"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="."/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
