@@ -245,13 +245,13 @@
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template match="mspace" mode="unwrap-mml">
+  <xsl:template match="mspace[@width]" mode="unwrap-mml">
     <xsl:variable name="mu-width" as="xs:decimal?">
       <xsl:choose>
         <xsl:when test="@width = 'mediummathspace'">
           <xsl:sequence select="4"/>
         </xsl:when>
-        <xsl:when test="matches(@width, '^\d')">
+        <xsl:when test="matches(@width, '^-?\d')">
           <xsl:sequence select="18 * xs:decimal(replace(@width, '[a-z]+', ''))"/>
         </xsl:when>
         <xsl:when test="@width = 'thinmathspace'">
